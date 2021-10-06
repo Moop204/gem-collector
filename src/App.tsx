@@ -2,75 +2,74 @@ import { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { GemCard } from "./GemCard";
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { Tier1, Tier2, Tier3, TierBack } from "./TierBack";
+import { CardBoard } from "./CardBoard";
+import { CoinBoard } from "./CoinBoard";
 
 function App() {
   const [count, setCount] = useState(0);
 
+  const translationOwnedCards = 28;
   return (
-    <div className="App">
+    <div>
       <Grid
-        h="70vh"
-        w="10vw"
-        maxW="10vw"
-        templateRows="repeat(4, 1fr)"
-        templateColumns="repeat(5, 1fr)"
-        gap={24}
+        h="100vh"
+        w="100vw"
+        templateRows="repeat(8, 1fr)"
+        templateColumns="repeat(8, 1fr)"
+        gap={16}
       >
-        <GridItem rowSpan={1} colSpan={1} bg="blue"></GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <GemCard />
+        <GridItem rowSpan={8} colSpan={4} bg="blue">
+          <CardBoard />
         </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <GemCard />
-        </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <GemCard />
-        </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <GemCard />
+        <GridItem rowSpan={2} colSpan={4} bg="blue">
+          <CoinBoard black={3} blue={3} green={2} white={7} red={4} wild={5} />
         </GridItem>
 
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <Tier3 />
+        <GridItem rowSpan={3} colSpan={4} bg="pink">
+          <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+            <GridItem rowSpan={1} colSpan={1}>
+              <Box position="absolute" top={translationOwnedCards + "vh"}>
+                <GemCard />
+              </Box>
+              <Box position="absolute" top={translationOwnedCards + 4 + "vh"}>
+                <GemCard />
+              </Box>
+              <Box position="absolute" top={translationOwnedCards + 8 + "vh"}>
+                <GemCard />
+              </Box>
+              <Box position="absolute" top={translationOwnedCards + 12 + "vh"}>
+                <GemCard />
+              </Box>
+            </GridItem>
+            <GridItem rowSpan={1} colSpan={1}>
+              <Box position="absolute" top={translationOwnedCards + "vh"}>
+                <GemCard />
+              </Box>
+              <Box position="absolute" top={translationOwnedCards + 4 + "vh"}>
+                <GemCard />
+              </Box>
+            </GridItem>
+            <GridItem rowSpan={1} colSpan={1}>
+              <Box position="absolute" top={translationOwnedCards + "vh"}>
+                <GemCard />
+              </Box>
+              <Box position="absolute" top={translationOwnedCards + 4 + "vh"}>
+                <GemCard />
+              </Box>
+              <Box position="absolute" top={translationOwnedCards + 8 + "vh"}>
+                <GemCard />
+              </Box>
+            </GridItem>
+            <GridItem rowSpan={1} colSpan={1}>
+              <Box position="absolute" top={translationOwnedCards + "vh"}>
+                <GemCard />
+              </Box>
+            </GridItem>
+          </Grid>
         </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <GemCard />
-        </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <GemCard />
-        </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <GemCard />
-        </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <GemCard />
-        </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <Tier2 />
-        </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <GemCard />
-        </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <GemCard />
-        </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <GemCard />
-        </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <GemCard />
-        </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <Tier1 />
-        </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <GemCard />
-        </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="blue">
-          <GemCard />
-        </GridItem>
+        <GridItem rowSpan={3} colSpan={4} bg="purple"></GridItem>
       </Grid>
     </div>
   );

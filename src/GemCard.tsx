@@ -153,8 +153,8 @@ const GemCard: FunctionComponent<{}> = () => {
     <div>
       <Box
         // bg="tomato"
-        w="10vw"
-        h="35vh"
+        w="5vw"
+        h="15vh"
         justifyContent="center"
         className="shiny"
         border="8px"

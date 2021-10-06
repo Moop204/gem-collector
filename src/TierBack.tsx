@@ -14,8 +14,8 @@ export const TierBack: FunctionComponent<DeckType> = ({
 }) => {
   return (
     <Flex
-      w="10vw"
-      h="35vh"
+      w="5vw"
+      h="15vh"
       bg={bg}
       flex="wraps"
       border="8px"
@@ -24,7 +24,7 @@ export const TierBack: FunctionComponent<DeckType> = ({
       color="white"
     >
       <Center width="100%">
-        <Text fontFamily="Georgia" fontSize={64}>
+        <Text fontFamily="Georgia" fontSize={32}>
           {tier}
         </Text>
       </Center>
