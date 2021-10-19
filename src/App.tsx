@@ -6,6 +6,7 @@ import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { Tier1, Tier2, Tier3, TierBack } from "./TierBack";
 import { CardBoard } from "./CardBoard";
 import { CoinBoard } from "./CoinBoard";
+import { HandBoard } from "./HandBoard";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -67,9 +68,19 @@ function App() {
                 <GemCard />
               </Box>
             </GridItem>
+            <GridItem rowSpan={1} colSpan={1}>
+              <Box position="absolute" top={translationOwnedCards + "vh"}>
+                <GemCard />
+              </Box>
+              <Box position="absolute" top={translationOwnedCards + 4 + "vh"}>
+                <GemCard />
+              </Box>
+            </GridItem>
           </Grid>
         </GridItem>
-        <GridItem rowSpan={3} colSpan={4} bg="purple"></GridItem>
+        <GridItem rowSpan={3} colSpan={4} bg="purple">
+          <HandBoard />
+        </GridItem>
       </Grid>
     </div>
   );

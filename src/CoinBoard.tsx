@@ -1,5 +1,5 @@
 import { Box, Center, Circle, Grid, GridItem } from "@chakra-ui/layout";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 
 interface CoinsState {
   blue: number;
@@ -163,6 +163,15 @@ const CoinPile: FunctionComponent<Pile> = ({ height, top, edge, outline }) => {
     positions.push((7 - i) * 10);
   }
   // positions.reverse();
+  const [selected, setSelected] = useState(-1);
+  useEffect(() => {}, []);
+
+  const handleClick = (e: any) => {
+    e.stopPropagation();
+    console.log(e.target);
+    console.log(e.target.id);
+    console.log(e.target.title);
+  };
 
   return (
     <Box
@@ -174,8 +183,17 @@ const CoinPile: FunctionComponent<Pile> = ({ height, top, edge, outline }) => {
       {/* <Center> */}
       {positions.map((position) => {
         return (
-          <Box position="absolute" top={position}>
-            <Coin top={top} edge={edge} outline={outline} />
+          <Box
+            position="absolute"
+            top={position}
+            onClick={handleClick}
+            key={top + position}
+          >
+            {position < selected ? (
+              <Coin top={top} edge={"yellow"} outline={outline} />
+            ) : (
+              <Coin top={top} edge={edge} outline={outline} />
+            )}
           </Box>
         );
       })}
