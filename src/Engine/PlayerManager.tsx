@@ -1,4 +1,4 @@
-import { Card, Gem } from "./Card";
+import { Card, Gem } from "../Card";
 import { Cost } from "./GemManager";
 
 export class PlayerManager {
@@ -77,5 +77,31 @@ export class PlayerManager {
     this.green -= payment.green; //Math.min(this.cGreen - c.greenCost, 0);
     this.white -= payment.white; //Math.min(this.cWhite - c.whiteCost, 0);
     this.wild -= payment.wild;
+  }
+
+  adjustGem(gem: Gem, adjustment: number) {
+    switch (gem) {
+      case Gem.BLACK:
+        this.black += adjustment;
+      case Gem.BLUE:
+        this.blue += adjustment;
+      case Gem.WHITE:
+        this.white += adjustment;
+      case Gem.GREEN:
+        this.green += adjustment;
+      case Gem.RED:
+        this.red += adjustment;
+      case Gem.WILD:
+        this.wild += adjustment;
+    }
+  }
+
+  claimGems(claims: Gem[]) {
+    if (claims.length === 3) {
+      claims.forEach((g) => this.adjustGem(g, 1));
+    } else if (claims.length === 1) {
+      const adjustment = claims[0] === "wild" ? 1 : 2;
+      this.adjustGem(claims[0], adjustment);
+    }
   }
 }

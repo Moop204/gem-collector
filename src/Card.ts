@@ -4,6 +4,7 @@ export enum Gem {
   RED = "red",
   GREEN = "green",
   BLUE = "blue",
+  WILD = "wild",
 }
 
 export enum GemNum {
@@ -12,6 +13,7 @@ export enum GemNum {
   "red",
   "green",
   "blue",
+  "wild",
 }
 
 export type Tier = 1 | 2 | 3;

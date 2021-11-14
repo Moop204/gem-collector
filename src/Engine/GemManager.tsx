@@ -1,4 +1,4 @@
-import { Gem } from "./Card";
+import { Gem } from "../Card";
 
 export interface Cost {
   black: number;
@@ -26,6 +26,34 @@ export class GemManager {
     this.blue = 10;
     this.wild = 5;
     this.errors = [];
+  }
+
+  selectGem(gem: Gem) {
+    switch (gem) {
+      case Gem.BLACK:
+        return this.black;
+      case Gem.BLUE:
+        return this.blue;
+      case Gem.WHITE:
+        return this.white;
+      case Gem.GREEN:
+        return this.green;
+      case Gem.RED:
+        return this.red;
+      case Gem.WILD:
+        return this.wild;
+    }
+  }
+
+  validClaim(claims: Gem[]) {
+    if (claims.length === 3) {
+      claims.forEach((claim) => {
+        if (this.selectGem(claim) < 1) return false;
+      });
+    } else if (claims.length === 1) {
+      if (this.selectGem(claims[0]) < 2) return false;
+    }
+    return true;
   }
 
   adjustGem(gem: Gem, adjust: number) {
@@ -59,7 +87,8 @@ export class GemManager {
 
   claim(claims: Gem[]) {
     if (claims.length === 1) {
-      this.adjustGem(claims[0], -2);
+      const adjustment = claims[0] === "wild" ? -1 : -2;
+      this.adjustGem(claims[0], adjustment);
     } else if (claims.length === 3) {
       claims.forEach((gem: Gem) => {
         this.adjustGem(gem, -1);

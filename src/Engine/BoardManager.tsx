@@ -1,4 +1,4 @@
-import { Card } from "./Card";
+import { Card, Tier } from "../Card";
 
 const base = "something";
 
@@ -78,17 +78,26 @@ export class BoardManager {
     }
   }
 
-  async removeCard(tier: number, index: number) {
+  async removeCard(tier: Tier, index: number) {
     switch (tier) {
       case 1:
-        this.tier1.splice(index, 1, await this.drawCard(tier, this.deckState));
-        break;
+        return this.tier1.splice(
+          index,
+          1,
+          await this.drawCard(tier, this.deckState)
+        );
       case 2:
-        this.tier2.splice(index, 1, await this.drawCard(tier, this.deckState));
-        break;
+        return this.tier2.splice(
+          index,
+          1,
+          await this.drawCard(tier, this.deckState)
+        );
       case 3:
-        this.tier3.splice(index, 1, await this.drawCard(tier, this.deckState));
-        break;
+        return this.tier3.splice(
+          index,
+          1,
+          await this.drawCard(tier, this.deckState)
+        );
     }
   }
 }
