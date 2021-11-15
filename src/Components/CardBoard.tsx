@@ -1,6 +1,5 @@
 import { useState } from "react";
 import logo from "./logo.svg";
-import "./App.css";
 import { GemCard } from "./GemCard";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { Tier1, Tier2, Tier3, TierBack } from "./TierBack";

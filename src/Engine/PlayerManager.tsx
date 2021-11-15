@@ -1,5 +1,6 @@
-import { Card, Gem } from "../Card";
+import { Card, Gem } from "../Components/Card";
 import { Cost } from "./GemManager";
+import { State } from "./type";
 
 export class PlayerManager {
   black: number;
@@ -15,6 +16,8 @@ export class PlayerManager {
   cGreen: number;
   cBlue: number;
 
+  state: State;
+
   constructor() {
     this.black = 10;
     this.white = 10;
@@ -27,6 +30,15 @@ export class PlayerManager {
     this.cRed = 10;
     this.cGreen = 10;
     this.cBlue = 10;
+    this.state = State.AWAIT;
+  }
+
+  beginTurn() {
+    this.state = State.GEMCOLLECT;
+  }
+
+  endTurn() {
+    this.state = State.AWAIT;
   }
 
   addCard(gemType: Gem) {

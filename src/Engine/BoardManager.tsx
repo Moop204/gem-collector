@@ -1,4 +1,4 @@
-import { Card, Tier } from "../Card";
+import { Card, Tier } from "../Components/Card";
 
 const base = "something";
 

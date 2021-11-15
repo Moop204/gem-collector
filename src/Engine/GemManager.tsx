@@ -1,4 +1,5 @@
-import { Gem } from "../Card";
+import { makeAutoObservable } from "mobx";
+import { Gem } from "../Components/Card";
 
 export interface Cost {
   black: number;
@@ -19,6 +20,8 @@ export class GemManager {
   errors: string[];
 
   constructor() {
+    makeAutoObservable(this);
+
     this.black = 10;
     this.white = 10;
     this.red = 10;
@@ -51,7 +54,10 @@ export class GemManager {
         if (this.selectGem(claim) < 1) return false;
       });
     } else if (claims.length === 1) {
-      if (this.selectGem(claims[0]) < 2) return false;
+      if (this.selectGem(claims[0]) < 2) {
+        console.log("Failed here");
+        return false;
+      }
     }
     return true;
   }
