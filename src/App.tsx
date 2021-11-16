@@ -5,7 +5,7 @@ import { GemCard } from "./Components/GemCard";
 import { Box, Button, Grid, GridItem } from "@chakra-ui/react";
 import { Tier1, Tier2, Tier3, TierBack } from "./Components/TierBack";
 import { CardBoard } from "./Components/CardBoard";
-import { CoinBoard } from "./Components/CoinBoard";
+import CoinBoard from "./Components/CoinBoard";
 import { HandBoard } from "./Components/HandBoard";
 import { Engine } from "./Engine/Engine";
 import { Gem } from "./Components/Card";
@@ -16,11 +16,11 @@ function App() {
   const [engine, setEngine] = useState(new Engine());
 
   const store = new Engine();
-  return (
-    <div className="App">
-      <UseEngine store={store} />
-    </div>
-  );
+  // return (
+  //   <div className="App">
+  //     <UseEngine store={store} />
+  //   </div>
+  // );
 
   const translationOwnedCards = 28;
   return (
@@ -36,17 +36,10 @@ function App() {
           <CardBoard />
         </GridItem>
         <GridItem rowSpan={2} colSpan={4} bg="blue">
-          <CoinBoard
-            black={engine.economy.black}
-            blue={engine.economy.blue}
-            green={engine.economy.green}
-            white={engine.economy.white}
-            red={engine.economy.red}
-            wild={engine.economy.wild}
-          />
+          <CoinBoard store={engine} />
           <Button
             onClick={() => {
-              engine.gemSelection([Gem.BLACK]);
+              engine.gemSelection([Gem.BLUE]);
               console.log(engine.economy.black);
               setEngine(engine);
             }}

@@ -6,10 +6,10 @@ import { Engine } from "../Engine/Engine";
 import { Gem } from "./Card";
 import { CoinBoard } from "./CoinBoard";
 
-interface IEngine {
+interface EngineStore {
   store: Engine;
 }
-const UseEngine: FunctionComponent<IEngine> = ({ store }) => {
+const UseEngine: FunctionComponent<EngineStore> = ({ store }) => {
   return (
     <GridItem rowSpan={2} colSpan={4} bg="blue">
       <CoinBoard

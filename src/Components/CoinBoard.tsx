@@ -1,22 +1,19 @@
 import { Box, Center, Circle, Grid, GridItem } from "@chakra-ui/layout";
+import { observer } from "mobx-react-lite";
 import { FunctionComponent, useEffect, useState } from "react";
+import { Engine } from "../Engine/Engine";
 
 interface CoinsState {
-  blue: number;
-  black: number;
-  white: number;
-  red: number;
-  green: number;
-  wild: number;
+  store: Engine;
 }
-export const CoinBoard: FunctionComponent<CoinsState> = ({
-  black,
-  white,
-  blue,
-  red,
-  green,
-  wild,
-}) => {
+const CoinBoard: FunctionComponent<CoinsState> = ({ store }) => {
+  const black = store.economy.black;
+  const white = store.economy.white;
+  const blue = store.economy.blue;
+  const red = store.economy.red;
+  const green = store.economy.green;
+  const wild = store.economy.wild;
+
   return (
     <Box bg="burlywood">
       <Grid
@@ -222,3 +219,5 @@ const CoinPile: FunctionComponent<Pile> = ({ height, top, edge, outline }) => {
     </Box>
   );
 };
+
+export default observer(CoinBoard);
