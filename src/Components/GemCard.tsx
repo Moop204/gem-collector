@@ -13,7 +13,7 @@ interface IGem {
   value?: number;
 }
 
-const BlueGem: FunctionComponent<IGem> = ({ w, h, value = -1 }) => {
+const BlueGem: FunctionComponent<IGem> = ({ w, h, value }) => {
   return (
     <Box
       h={h}
@@ -23,39 +23,39 @@ const BlueGem: FunctionComponent<IGem> = ({ w, h, value = -1 }) => {
       justifyContent="center"
     >
       <div className="shadow" />
-      {value == -1 ?? value}
+      {value ?? value}
     </Box>
   );
 };
 
-const GreenGem: FunctionComponent<IGem> = ({ w, h, value = -1 }) => {
+const GreenGem: FunctionComponent<IGem> = ({ w, h, value }) => {
   return (
     <Box w={w} h={h} className="greenGem">
       <div className="shadow" />
-      {value == -1 ?? value}
+      {value ?? value}
     </Box>
   );
 };
 
-const BlackGem: FunctionComponent<IGem> = ({ w, h, value = -1 }) => {
+const BlackGem: FunctionComponent<IGem> = ({ w, h, value }) => {
   return (
     <Box w={w} h={h} className="blackGem">
       <div className="shadow" />
-      {value == -1 ?? value}
+      {value ?? value}
     </Box>
   );
 };
 
-const RedGem: FunctionComponent<IGem> = ({ w, h, value = -1 }) => {
+const RedGem: FunctionComponent<IGem> = ({ w, h, value }) => {
   return (
     <Box h={h} w={w} className="redGem">
       <div className="shadow" />
-      {value == -1 ?? value}
+      {value ?? value}
     </Box>
   );
 };
 
-const WhiteGem: FunctionComponent<IGem> = ({ w, h, value = -1 }) => {
+const WhiteGem: FunctionComponent<IGem> = ({ w, h, value }) => {
   return (
     <Box
       h={h}
@@ -65,7 +65,7 @@ const WhiteGem: FunctionComponent<IGem> = ({ w, h, value = -1 }) => {
       justifyContent="center"
     >
       <div className="shadow" />
-      {value == -1 ?? value}
+      {value ?? value}
     </Box>
   );
 };
@@ -82,12 +82,13 @@ const GemRewardComponent: FunctionComponent<IReward> = ({
   value,
 }) => {
   if (value) {
+    console.log("HAD VALUE");
     switch (gem) {
-      case "red":
+      case Gem.RED:
         return <RedGem w={w} h={h} value={value} />;
-      case "black":
+      case Gem.BLACK:
         return <BlackGem w={w} h={h} value={value} />;
-      case "blue":
+      case Gem.BLUE:
         return <BlueGem w={w} h={h} value={value} />;
       case "white":
         return <WhiteGem w={w} h={h} value={value} />;
@@ -107,64 +108,100 @@ const GemRewardComponent: FunctionComponent<IReward> = ({
     case "green":
       return <GreenGem w={w} h={h} />;
   }
+  console.log("INVALID GEM PASSED");
   return <></>;
 };
 
 const CardReward: FunctionComponent<{ card: Card }> = ({ card }) => {
-  console.log(card);
+  // console.log(card);
   return (
-    <GridItem
-      rowSpan={2}
-      colSpan={5}
-      bg="tomato"
-      alignItems="center"
+    <Flex
+      justifyContent="right"
+      justifyItems="right"
       alignContent="center"
+      alignItems="center"
+      flexDirection="row-reverse"
+      background="purple"
     >
-      <Flex
-        justifyContent="right"
-        justifyItems="right"
-        alignContent="center"
-        alignItems="center"
-        flexDirection="row-reverse"
-        background="purple"
-      >
-        <GemRewardComponent gem={card.reward} w="20px" h="20px" />
-        <BlueGem w="20px" h="20px" value={1} />
-      </Flex>
-    </GridItem>
+      <GemRewardComponent gem={card.reward} w="20px" h="20px" />
+    </Flex>
   );
 };
 
+const calculateCost = (card: Card) => {
+  const dict = {};
+  if (card.blackCost != 0) {
+    // @ts-ignore
+    dict[Gem.BLACK] = card.blackCost;
+  }
+  if (card.whiteCost != 0) {
+    // @ts-ignore
+    dict[Gem.WHITE] = card.whiteCost;
+  }
+  if (card.greenCost != 0) {
+    // @ts-ignore
+    dict[Gem.GREEN] = card.greenCost;
+  }
+  if (card.blueCost != 0) {
+    // @ts-ignore
+    dict[Gem.BLUE] = card.blueCost;
+  }
+  if (card.redCost != 0) {
+    // @ts-ignore
+    dict[Gem.RED] = card.redCost;
+  }
+  return dict;
+};
+
 const CostComponent: FunctionComponent<IGemCard> = ({ card }) => {
+  const costs = calculateCost(card);
+  // console.log(costs);
+  // console.log(Gem.BLACK);
   return (
     <Grid
       templateRows="repeat(6, 1fr)"
-      templateColumns="repeat(5, 1fr)"
+      templateColumns="repeat(2, 1fr)"
       gap={4}
+      bg="pink"
+      id="bwah"
     >
-      <CardReward card={card} />
       <GridItem rowSpan={1} colSpan={2} bg="tomato">
+        <CardReward card={card} />
+      </GridItem>
+      {Object.entries(costs).map(([key, cost]) => {
+        console.log(cost);
+        return (
+          <>
+            <GridItem colSpan={1} bg="green" id="whack">
+              <GemRewardComponent
+                gem={key as Gem}
+                h="20px"
+                w="20px"
+                value={cost as number}
+              />
+            </GridItem>
+            <GridItem />
+          </>
+        );
+      })}
+
+      {/* <GridItem colSpan={1} bg="green" id="whack">
         <BlueGem w="20px" h="20px" value={1} />
       </GridItem>
-      <GridItem colSpan={2} bg="papayawhip" />
-      <GridItem
-        rowSpan={1}
-        colSpan={2}
-        bg="tomato"
-        justifyContent="center"
-        justifyItems="center"
-      >
+      <GridItem colSpan={1} /> */}
+      {/* <Box w="100%" />{" "} */}
+      {/* </GridItem> */}
+      {/* <GridItem colSpan={1} bg="purple">
         <RedGem w="35px" h="20px" value={2} />
       </GridItem>
-      <GridItem colSpan={2} bg="papayawhip" />
-      <GridItem rowSpan={1} colSpan={2} bg="tomato">
+      <GridItem colSpan={1} />
+      <GridItem colSpan={1} bg="orange">
         <GreenGem w="30px" h="20px" value={3} />
       </GridItem>
-      <GridItem colSpan={2} bg="papayawhip" />
-      <GridItem rowSpan={1} colSpan={2} bg="tomato">
+      <GridItem colSpan={1} />
+      <GridItem colSpan={1} bg="yellow">
         <BlackGem w="35px" h="20px" value={4} />
-      </GridItem>
-      <GridItem colSpan={2} bg="papayawhip" />
+      </GridItem> */}
     </Grid>
   );
 };
@@ -173,7 +210,7 @@ const GemCard: FunctionComponent<IGemCard> = ({ card }) => {
   return (
     <Box
       w="100%"
-      h="15vh"
+      h="20vh"
       flexGrow={1}
       justifyContent="center"
       className="shiny"
