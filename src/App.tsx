@@ -7,6 +7,7 @@ import CoinBoard from "./Components/CoinBoard";
 import { HandBoard } from "./Components/HandBoard";
 import { Engine } from "./Engine/Engine";
 import { Gem } from "./Components/Card";
+import { CollectedBoard } from "./Components/CollectedBoard";
 function App() {
   const [count, setCount] = useState(0);
   const [engine, setEngine] = useState(new Engine());
@@ -23,11 +24,10 @@ function App() {
   //   </div>
   // );
 
-  const translationOwnedCards = 28;
   return (
     <Grid
       h="100vh"
-      w="100vw"
+      w="100%"
       templateRows="repeat(8, 1fr)"
       templateColumns="repeat(8, 1fr)"
       gap={16}
@@ -49,54 +49,7 @@ function App() {
       </GridItem>
 
       <GridItem rowSpan={3} colSpan={4} bg="pink">
-        <Grid templateColumns="repeat(4, 1fr)" gap={4}>
-          <GridItem rowSpan={1} colSpan={1}>
-            <Box position="absolute" top={translationOwnedCards + "vh"}>
-              {/* <GemCard /> */}
-            </Box>
-            <Box position="absolute" top={translationOwnedCards + 4 + "vh"}>
-              {/* <GemCard /> */}
-            </Box>
-            <Box position="absolute" top={translationOwnedCards + 8 + "vh"}>
-              {/* <GemCard /> */}
-            </Box>
-            <Box position="absolute" top={translationOwnedCards + 12 + "vh"}>
-              {/* <GemCard /> */}
-            </Box>
-          </GridItem>
-          <GridItem rowSpan={1} colSpan={1}>
-            <Box position="absolute" top={translationOwnedCards + "vh"}>
-              {/* <GemCard /> */}
-            </Box>
-            <Box position="absolute" top={translationOwnedCards + 4 + "vh"}>
-              {/* <GemCard /> */}
-            </Box>
-          </GridItem>
-          <GridItem rowSpan={1} colSpan={1}>
-            <Box position="absolute" top={translationOwnedCards + "vh"}>
-              {/* <GemCard /> */}
-            </Box>
-            <Box position="absolute" top={translationOwnedCards + 4 + "vh"}>
-              {/* <GemCard /> */}
-            </Box>
-            <Box position="absolute" top={translationOwnedCards + 8 + "vh"}>
-              {/* <GemCard /> */}
-            </Box>
-          </GridItem>
-          <GridItem rowSpan={1} colSpan={1}>
-            <Box position="absolute" top={translationOwnedCards + "vh"}>
-              {/* <GemCard /> */}
-            </Box>
-          </GridItem>
-          <GridItem rowSpan={1} colSpan={1}>
-            <Box position="absolute" top={translationOwnedCards + "vh"}>
-              {/* <GemCard /> */}
-            </Box>
-            <Box position="absolute" top={translationOwnedCards + 4 + "vh"}>
-              {/* <GemCard /> */}
-            </Box>
-          </GridItem>
-        </Grid>
+        <CollectedBoard store={engine} />
       </GridItem>
       <GridItem rowSpan={3} colSpan={4} bg="purple">
         <HandBoard />

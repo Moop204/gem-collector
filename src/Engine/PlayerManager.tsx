@@ -25,11 +25,11 @@ export class PlayerManager {
     this.green = 10;
     this.blue = 10;
     this.wild = 5;
-    this.cBlack = 10;
-    this.cWhite = 10;
-    this.cRed = 10;
-    this.cGreen = 10;
-    this.cBlue = 10;
+    this.cBlack = 2;
+    this.cWhite = 2;
+    this.cRed = 2;
+    this.cGreen = 2;
+    this.cBlue = 2;
     this.state = State.AWAIT;
   }
 
@@ -81,14 +81,93 @@ export class PlayerManager {
     return Math.min(this.getCardTotal(gem) - cost, 0);
   }
 
-  buyCard(c: Card, payment: Cost) {
+  isCardBuyable(c: Card) {
+    const blackRemainder = Math.max(
+      c.blackCost - (this.cBlack + this.black),
+      0
+    );
+    const whiteRemainder = Math.max(
+      c.whiteCost - (this.cWhite + this.white),
+      0
+    );
+    const blueRemainder = Math.max(c.blueCost - (this.cBlue + this.blue), 0);
+    const redRemainder = Math.max(c.redCost - (this.cRed + this.red), 0);
+    const greenRemainder = Math.max(
+      c.greenCost - (this.cGreen + this.green),
+      0
+    );
+    return (
+      blackRemainder +
+        whiteRemainder +
+        blueRemainder +
+        redRemainder +
+        greenRemainder <=
+      this.wild
+    );
+  }
+
+  buyCard(c: Card) {
+    const res: Cost = {
+      black: c.blackCost,
+      white: c.whiteCost,
+      red: c.redCost,
+      green: c.greenCost,
+      blue: c.blueCost,
+      wild: 0,
+    };
+
     this.addCard(c.reward);
-    this.black -= payment.black; //Math.min(this.cBlack - c.blackCost, 0);
-    this.blue -= payment.blue; //Math.min(this.cBlue - c.blueCost, 0);
-    this.red -= payment.red; // Math.min(this.cRed - c.redCost, 0);
-    this.green -= payment.green; //Math.min(this.cGreen - c.greenCost, 0);
-    this.white -= payment.white; //Math.min(this.cWhite - c.whiteCost, 0);
-    this.wild -= payment.wild;
+
+    const blackCoinCost = Math.max(c.blackCost - this.cBlack, 0);
+    this.black -= blackCoinCost;
+    res.black = blackCoinCost;
+    if (this.black < 0) {
+      this.wild += this.black;
+      res.black += this.black;
+      res.wild -= this.black;
+      this.black = 0;
+    }
+
+    const blueCoinCost = Math.max(c.blueCost - this.cBlue, 0);
+    this.blue -= blueCoinCost;
+    res.blue = blueCoinCost;
+    if (this.blue < 0) {
+      this.wild += this.blue;
+      res.blue += this.blue;
+      res.wild -= this.blue;
+      this.blue = 0;
+    }
+
+    const redCoinCost = Math.max(c.redCost - this.cRed, 0);
+    this.red -= redCoinCost;
+    res.red = redCoinCost;
+    if (this.red < 0) {
+      this.wild += this.red;
+      res.red += this.red;
+      res.wild -= this.red;
+      this.red = 0;
+    }
+
+    const greenCoinCost = Math.max(c.greenCost - this.cGreen, 0);
+    this.green -= greenCoinCost;
+    res.green = greenCoinCost;
+    if (this.green < 0) {
+      this.wild += this.green;
+      res.green += this.green;
+      res.wild -= this.green;
+      this.green = 0;
+    }
+
+    const whiteCoinCost = Math.max(c.whiteCost - this.cWhite, 0);
+    this.white -= whiteCoinCost;
+    res.white = whiteCoinCost;
+    if (this.white < 0) {
+      this.wild += this.white;
+      res.white += this.white;
+      res.wild -= this.white;
+      this.white = 0;
+    }
+    return res;
   }
 
   adjustGem(gem: Gem, adjustment: number) {

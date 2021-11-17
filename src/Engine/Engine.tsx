@@ -72,10 +72,13 @@ export class Engine {
     this.player.claimGems(claims);
   }
 
-  async cardSelection(tier: Tier, index: number, payment: Cost) {
-    const card: Card[] = await this.board.removeCard(tier, index);
-    this.player.buyCard(card[0], payment);
-    this.economy.spend(payment);
+  async cardSelection(tier: Tier, index: number) {
+    const c: Card = this.board.board[tier][index];
+    if (this.player.isCardBuyable(c)) {
+      const card: Card[] = await this.board.removeCard(tier, index);
+      const payment = this.player.buyCard(card[0]);
+      this.economy.returnToTreasury(payment);
+    }
 
     this.player.endTurn();
     // Wait set amount of time then set turn again for testing

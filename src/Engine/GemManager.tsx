@@ -82,7 +82,7 @@ export class GemManager {
     }
   }
 
-  spend(cost: Cost) {
+  returnToTreasury(cost: Cost) {
     this.black += cost.black;
     this.white += cost.white;
     this.green += cost.green;
