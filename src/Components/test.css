@@ -2,9 +2,6 @@
 
 /* Taken from https://stackoverflow.com/questions/27730301/how-to-make-glossy-colors-in-css  */
 .shiny { 
-  border-color: #cedbe9; /* Old browsers */
-  border-color: -moz-linear-gradient(top,  #cedbe9 0%, #aac5de 17%, #6199c7 50%, #3a84c3 51%, #419ad6 59%, #4bb8f0 71%, #3a8bc2 84%, #26558b 100%); /* FF3.6-15 */
-  border-color: -webkit-linear-gradient(top,  #cedbe9 0%,#aac5de 17%,#6199c7 50%,#3a84c3 51%,#419ad6 59%,#4bb8f0 71%,#3a8bc2 84%,#26558b 100%); /* Chrome10-25,Safari5.1-6 */
   border-color: linear-gradient(to bottom,  #cedbe9 0%,#aac5de 17%,#6199c7 50%,#3a84c3 51%,#419ad6 59%,#4bb8f0 71%,#3a8bc2 84%,#26558b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cedbe9', endColorstr='#26558b',GradientType=0 ); /* IE6-9 */  
   border-radius: 5px;

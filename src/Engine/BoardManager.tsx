@@ -1,6 +1,8 @@
-import { Card, Tier } from "../Components/Card";
+import { action, makeAutoObservable, observable } from "mobx";
+import { Card, Gem, Tier } from "../Components/Card";
 
-const base = "something";
+// const base = "https://deck-of-gems.herokuapp.com/";
+const base = "http://localhost:3000/";
 
 export class BoardManager {
   tier1: Card[];
@@ -11,6 +13,19 @@ export class BoardManager {
   deckState: string;
 
   constructor() {
+    makeAutoObservable(this, {
+      tier1: observable,
+      tier2: observable,
+      tier3: observable,
+      loaded: observable,
+      bonus: observable,
+      deckState: observable,
+      initialiseBoard: action,
+      drawCard: action,
+      removeCard: action,
+      getCard: action,
+    });
+
     this.tier1 = [];
     this.tier2 = [];
     this.tier3 = [];
@@ -20,48 +35,77 @@ export class BoardManager {
     this.initialiseBoard();
   }
 
+  get isLoaded() {
+    return this.loaded;
+  }
+
+  get getTier1() {
+    return this.tier1;
+  }
+  get getTier2() {
+    return this.tier2;
+  }
+  get getTier3() {
+    return this.tier3;
+  }
+
+  get board() {
+    return [this.tier1, this.tier2, this.tier3];
+  }
+
   async initialiseBoard() {
-    const initialResponse = await fetch(base);
-    let state: string = JSON.parse(await initialResponse.json())["state"];
+    const request = new URL("start", base);
+    const initialResponse = await fetch(request.toString(), { mode: "cors" });
+    const obj = await initialResponse.json();
+    let state: string = obj["state"];
+    // console.log(state);
+    // console.log("ha");
     this.deckState = state;
     // Request to fill board initially
     for (let i = 0; i < 4; i++) {
-      let card = await this.drawCard(1, state);
+      let card = await this.drawCard(1, this.deckState);
       this.tier1.push(card);
-      card = await this.drawCard(1, state);
+      card = await this.drawCard(1, this.deckState);
       this.tier2.push(card);
-      card = await this.drawCard(1, state);
+      card = await this.drawCard(1, this.deckState);
       this.tier3.push(card);
     }
     this.loaded = true;
   }
 
   async drawCard(tier: number, state: string) {
-    const response = await fetch(base + state + tier);
-    const obj = JSON.parse(await response.json());
+    const request = new URL(
+      "draw?state=" + state + "&tier=" + tier.toString(),
+      base
+    );
+    const response = await fetch(request.toString(), { mode: "cors" });
+    const obj = await response.json();
     const card = new Card({
-      reward: obj.reward,
-      point: obj.point,
+      reward: obj.card.reward,
+      point: obj.card.point,
       tier: 1,
-      blackCost: obj.cost.black,
-      whiteCost: obj.cost.white,
-      redCost: obj.cost.red,
-      blueCost: obj.cost.blue,
-      greenCost: obj.cost.green,
+      blackCost: obj.card.cost.black,
+      whiteCost: obj.card.cost.white,
+      redCost: obj.card.cost.red,
+      blueCost: obj.card.cost.blue,
+      greenCost: obj.card.cost.green,
     });
-    // switch (tier) {
-    //   case 1:
-    //     this.tier1.push(card);
-    //     break;
-    //   case 2:
-    //     this.tier2.push(card);
-    //     break;
-    //   case 3:
-    //     this.tier3.push(card);
-    //     break;
-    // }
     this.deckState = obj.state;
     return card;
+    // // } catch {
+    // //   console.log("Response fucked");
+    // // }
+    // const card = new Card({
+    //   reward: Gem.WILD,
+    //   point: -1,
+    //   tier: 1,
+    //   blackCost: -1,
+    //   whiteCost: -1,
+    //   redCost: -1,
+    //   blueCost: -1,
+    //   greenCost: -1,
+    // });
+    // return card;
   }
 
   getCard(tier: number, index: number) {

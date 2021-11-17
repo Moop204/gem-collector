@@ -16,12 +16,7 @@ const CoinBoard: FunctionComponent<CoinsState> = ({ store }) => {
 
   return (
     <Box bg="burlywood">
-      <Grid
-        templateRows="repeat(1, 1fr)"
-        templateColumns="repeat(6, 1fr)"
-        w="100%"
-        gap={4}
-      >
+      <Grid templateColumns="repeat(6, 1fr)" w="100%" gap={4}>
         <GridItem
           flexDir="column"
           bg="green"

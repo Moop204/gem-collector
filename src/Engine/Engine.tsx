@@ -96,4 +96,10 @@ export class Engine {
     }
     return 0;
   }
+
+  testFunc() {
+    this.board.initialiseBoard();
+
+    console.log(this.board.tier1[0]);
+  }
 }

@@ -35,7 +35,7 @@ interface IThemeContext {
   toggleDark?: () => void;
 }
 
-const ThemeContext = createContext<IThemeContext>(defaultState);
+const ThemeContext = createContext<Engine>(new Engine());
 
 const TestComponent = () => {
   return (
