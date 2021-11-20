@@ -74,6 +74,8 @@ export class Engine {
 
   async cardSelection(tier: Tier, index: number) {
     const c: Card = this.board.board[tier][index];
+    console.log("Is work?");
+    console.log(this.player.isCardBuyable(c));
     if (this.player.isCardBuyable(c)) {
       const card: Card[] = await this.board.removeCard(tier, index);
       const payment = this.player.buyCard(card[0]);

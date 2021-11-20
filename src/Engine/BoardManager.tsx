@@ -64,11 +64,12 @@ export class BoardManager {
     // Request to fill board initially
     for (let i = 0; i < 4; i++) {
       let card = await this.drawCard(1, this.deckState);
-      this.tier1.push(card);
+      if (card) this.tier1.push(card);
       card = await this.drawCard(1, this.deckState);
-      this.tier2.push(card);
+      if (card) this.tier2.push(card);
       card = await this.drawCard(1, this.deckState);
-      this.tier3.push(card);
+      if (card) this.tier3.push(card);
+      // Should never fail here
     }
     this.loaded = true;
   }
@@ -80,6 +81,10 @@ export class BoardManager {
     );
     const response = await fetch(request.toString(), { mode: "cors" });
     const obj = await response.json();
+    if (obj.error) {
+      return null;
+    }
+    console.log(obj);
     const card = new Card({
       reward: obj.card.reward,
       point: obj.card.point,
@@ -123,25 +128,30 @@ export class BoardManager {
   }
 
   async removeCard(tier: Tier, index: number) {
-    switch (tier) {
-      case 1:
-        return this.tier1.splice(
-          index,
-          1,
-          await this.drawCard(tier, this.deckState)
-        );
-      case 2:
-        return this.tier2.splice(
-          index,
-          1,
-          await this.drawCard(tier, this.deckState)
-        );
-      case 3:
-        return this.tier3.splice(
-          index,
-          1,
-          await this.drawCard(tier, this.deckState)
-        );
+    const nextCard = await this.drawCard(tier, this.deckState);
+    if (nextCard) {
+      switch (tier) {
+        case 1:
+          return this.tier1.splice(index, 1, nextCard);
+        case 2:
+          return this.tier2.splice(index, 1, nextCard);
+        case 3:
+          return this.tier3.splice(index, 1, nextCard);
+        default:
+          console.log("Error: Not a valid tier");
+      }
+    } else {
+      switch (tier) {
+        case 1:
+          return this.tier1.splice(index, 1);
+        case 2:
+          return this.tier2.splice(index, 1);
+        case 3:
+          return this.tier3.splice(index, 1);
+        default:
+          console.log("Error: Not a valid tier");
+      }
     }
+    return [];
   }
 }

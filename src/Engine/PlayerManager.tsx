@@ -1,3 +1,4 @@
+import { makeAutoObservable } from "mobx";
 import { Card, Gem } from "../Components/Card";
 import { Cost } from "./GemManager";
 import { State } from "./type";
@@ -19,6 +20,7 @@ export class PlayerManager {
   state: State;
 
   constructor() {
+    makeAutoObservable(this);
     this.black = 10;
     this.white = 10;
     this.red = 10;
