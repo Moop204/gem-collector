@@ -73,7 +73,7 @@ export class Engine {
   }
 
   async cardSelection(tier: Tier, index: number) {
-    const c: Card = this.board.board[tier][index];
+    const c: Card = this.board.board[tier - 1][index];
     console.log("Is work?");
     console.log(this.player.isCardBuyable(c));
     if (this.player.isCardBuyable(c)) {

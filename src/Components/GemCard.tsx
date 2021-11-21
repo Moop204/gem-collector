@@ -2,6 +2,7 @@ import { FunctionComponent } from "react";
 import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import "./test.css";
 import { Card, Gem } from "./Card";
+import { generateCardId } from "./CardBoard";
 
 interface IGemCard {
   card: Card;
@@ -82,7 +83,7 @@ const GemRewardComponent: FunctionComponent<IReward> = ({
   value,
 }) => {
   if (value) {
-    console.log("HAD VALUE");
+    // console.log("HAD VALUE");
     switch (gem) {
       case Gem.RED:
         return <RedGem w={w} h={h} value={value} />;
@@ -108,7 +109,7 @@ const GemRewardComponent: FunctionComponent<IReward> = ({
     case "green":
       return <GreenGem w={w} h={h} />;
   }
-  console.log("INVALID GEM PASSED");
+  // console.log("INVALID GEM PASSED");
   return <></>;
 };
 
@@ -156,23 +157,21 @@ const calculateCost = (card: Card) => {
 const CostComponent: FunctionComponent<IGemCard> = ({ card }) => {
   const costs = calculateCost(card);
   // console.log(costs);
-  // console.log(Gem.BLACK);
   return (
     <Grid
       templateRows="repeat(6, 1fr)"
       templateColumns="repeat(2, 1fr)"
       gap={4}
       bg="pink"
-      id="bwah"
     >
       <GridItem rowSpan={1} colSpan={2} bg="tomato">
         <CardReward card={card} />
       </GridItem>
       {Object.entries(costs).map(([key, cost]) => {
-        console.log(cost);
+        console.log(generateCardId(card) + key + "-" + cost);
         return (
-          <>
-            <GridItem colSpan={1} bg="green" id="whack">
+          <div id={generateCardId(card) + key + "-" + cost}>
+            <GridItem bg="green">
               <GemRewardComponent
                 gem={key as Gem}
                 h="20px"
@@ -181,27 +180,9 @@ const CostComponent: FunctionComponent<IGemCard> = ({ card }) => {
               />
             </GridItem>
             <GridItem />
-          </>
+          </div>
         );
       })}
-
-      {/* <GridItem colSpan={1} bg="green" id="whack">
-        <BlueGem w="20px" h="20px" value={1} />
-      </GridItem>
-      <GridItem colSpan={1} /> */}
-      {/* <Box w="100%" />{" "} */}
-      {/* </GridItem> */}
-      {/* <GridItem colSpan={1} bg="purple">
-        <RedGem w="35px" h="20px" value={2} />
-      </GridItem>
-      <GridItem colSpan={1} />
-      <GridItem colSpan={1} bg="orange">
-        <GreenGem w="30px" h="20px" value={3} />
-      </GridItem>
-      <GridItem colSpan={1} />
-      <GridItem colSpan={1} bg="yellow">
-        <BlackGem w="35px" h="20px" value={4} />
-      </GridItem> */}
     </Grid>
   );
 };

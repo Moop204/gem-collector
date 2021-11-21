@@ -4,10 +4,27 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import { Tier1, Tier2, Tier3, TierBack } from "./TierBack";
 import { observer } from "mobx-react-lite";
 import { Engine } from "../Engine/Engine";
+import { Card } from "./Card";
 
 interface EngineStore {
   store: Engine;
 }
+
+export const generateCardId = (c: Card): string => {
+  return (
+    c.blackCost +
+    "-" +
+    c.blueCost +
+    "-" +
+    c.greenCost +
+    "-" +
+    c.redCost +
+    "-" +
+    c.whiteCost +
+    "-" +
+    c.reward
+  );
+};
 
 const BonusRow: FunctionComponent<{}> = () => {
   return (
@@ -25,46 +42,6 @@ const BonusRow: FunctionComponent<{}> = () => {
   );
 };
 
-const Tier3Row: FunctionComponent<EngineStore> = observer(({ store }) => {
-  // if (store.board.isLoaded) {
-  // const tierRow = store.board.getTier3;
-  // console.log(store.board.getTier3);
-  return (
-    <>
-      <GridItem rowSpan={1} colSpan={5} bg="blue">
-        <Grid templateColumns="repeat(5, 1fr)" gap={24}>
-          <GridItem rowSpan={1} colSpan={1} bg="blue">
-            <Tier3 />
-          </GridItem>
-          {store.board.getTier3.map((card) => {
-            console.log(card);
-            return (
-              <GridItem
-                key={
-                  card.blackCost +
-                  "-" +
-                  card.blueCost +
-                  "-" +
-                  card.greenCost +
-                  "-" +
-                  card.redCost +
-                  "-" +
-                  card.whiteCost +
-                  "-" +
-                  card.reward
-                }
-              >
-                <GemCard card={card} />
-              </GridItem>
-            );
-          })}
-        </Grid>
-      </GridItem>
-    </>
-  );
-  // } else return <div>wait</div>;
-});
-
 const Tier1Row: FunctionComponent<EngineStore> = observer(({ store }) => {
   return (
     <>
@@ -73,22 +50,14 @@ const Tier1Row: FunctionComponent<EngineStore> = observer(({ store }) => {
           <GridItem rowSpan={1} colSpan={1} bg="blue">
             <Tier1 />
           </GridItem>
-          {store.board.getTier1.map((card) => {
+          {store.board.getTier1.map((card, i) => {
             return (
               <GridItem
-                key={
-                  card.blackCost +
-                  "-" +
-                  card.blueCost +
-                  "-" +
-                  card.greenCost +
-                  "-" +
-                  card.redCost +
-                  "-" +
-                  card.whiteCost +
-                  "-" +
-                  card.reward
-                }
+                key={generateCardId(card) + "-1"}
+                onClick={async () => {
+                  await store.cardSelection(1, i);
+                  // console.log("have this many blues " + store.player.cBlue);
+                }}
               >
                 <GemCard card={card} />
               </GridItem>
@@ -108,22 +77,14 @@ const Tier2Row: FunctionComponent<EngineStore> = observer(({ store }) => {
           <GridItem rowSpan={1} colSpan={1} bg="blue">
             <Tier2 />
           </GridItem>
-          {store.board.getTier2.map((card) => {
+          {store.board.getTier2.map((card, i) => {
             return (
               <GridItem
-                key={
-                  card.blackCost +
-                  "-" +
-                  card.blueCost +
-                  "-" +
-                  card.greenCost +
-                  "-" +
-                  card.redCost +
-                  "-" +
-                  card.whiteCost +
-                  "-" +
-                  card.reward
-                }
+                key={generateCardId(card) + "-2"}
+                onClick={async () => {
+                  await store.cardSelection(2, i);
+                  // console.log("have this many blues " + store.player.cBlue);
+                }}
               >
                 <GemCard card={card} />
               </GridItem>
@@ -133,6 +94,38 @@ const Tier2Row: FunctionComponent<EngineStore> = observer(({ store }) => {
       </GridItem>
     </>
   );
+});
+
+const Tier3Row: FunctionComponent<EngineStore> = observer(({ store }) => {
+  // if (store.board.isLoaded) {
+  // const tierRow = store.board.getTier3;
+  // console.log(store.board.getTier3);
+  return (
+    <>
+      <GridItem rowSpan={1} colSpan={5} bg="blue">
+        <Grid templateColumns="repeat(5, 1fr)" gap={24}>
+          <GridItem rowSpan={1} colSpan={1} bg="blue">
+            <Tier3 />
+          </GridItem>
+          {store.board.getTier3.map((card, i) => {
+            console.log(card);
+            return (
+              <GridItem
+                key={generateCardId(card) + "-3"}
+                onClick={async () => {
+                  await store.cardSelection(3, i);
+                  // console.log("have this many blues " + store.player.cBlue);
+                }}
+              >
+                <GemCard card={card} />
+              </GridItem>
+            );
+          })}
+        </Grid>
+      </GridItem>
+    </>
+  );
+  // } else return <div>wait</div>;
 });
 
 const CardBoard: FunctionComponent<EngineStore> = ({ store }) => {

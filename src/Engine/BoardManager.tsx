@@ -84,7 +84,7 @@ export class BoardManager {
     if (obj.error) {
       return null;
     }
-    console.log(obj);
+    // console.log(obj);
     const card = new Card({
       reward: obj.card.reward,
       point: obj.card.point,
