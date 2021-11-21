@@ -33,12 +33,12 @@ function App() {
           click me!
         </Button>
       </GridItem>
+      <GridItem rowSpan={3} colSpan={4} bg="purple">
+        <HandBoard store={engine} />
+      </GridItem>
 
       <GridItem rowSpan={3} colSpan={4} bg="pink">
         <CollectedBoard store={engine} />
-      </GridItem>
-      <GridItem rowSpan={3} colSpan={4} bg="purple">
-        <HandBoard />
       </GridItem>
     </Grid>
   );

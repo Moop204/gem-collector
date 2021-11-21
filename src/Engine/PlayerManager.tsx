@@ -21,12 +21,12 @@ export class PlayerManager {
 
   constructor() {
     makeAutoObservable(this);
-    this.black = 10;
-    this.white = 10;
-    this.red = 10;
-    this.green = 10;
-    this.blue = 10;
-    this.wild = 5;
+    this.black = 0;
+    this.white = 0;
+    this.red = 0;
+    this.green = 0;
+    this.blue = 0;
+    this.wild = 0;
     this.cBlack = [];
     this.cWhite = [];
     this.cRed = [];

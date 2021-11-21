@@ -103,7 +103,6 @@ const Tier3Row: FunctionComponent<EngineStore> = observer(({ store }) => {
             <Tier3 />
           </GridItem>
           {store.board.getTier3.map((card, i) => {
-            console.log(card);
             return (
               <GridItem
                 key={generateCardId(card) + "-3"}
