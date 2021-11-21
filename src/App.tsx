@@ -9,20 +9,7 @@ import { Engine } from "./Engine/Engine";
 import { Gem } from "./Components/Card";
 import { CollectedBoard } from "./Components/CollectedBoard";
 function App() {
-  const [count, setCount] = useState(0);
   const [engine, setEngine] = useState(new Engine());
-
-  const store = new Engine();
-  // console.log(engine.board.tier1);
-  // engine.board.drawCard(1, "lD9QQAppZRwEPEn2Ng");
-  console.log(engine.board.board);
-  console.log(engine.board.board[0]);
-
-  // return (
-  //   <div className="App">
-  //     <UseEngine store={store} />
-  //   </div>
-  // );
 
   return (
     <Grid
@@ -40,7 +27,6 @@ function App() {
         <Button
           onClick={() => {
             engine.gemSelection([Gem.BLUE]);
-            console.log(engine.economy.black);
             setEngine(engine);
           }}
         >

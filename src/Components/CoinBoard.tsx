@@ -160,9 +160,6 @@ const CoinPile: FunctionComponent<Pile> = ({ height, top, edge, outline }) => {
 
   const handleClick = (e: any) => {
     e.stopPropagation();
-    console.log(e.target);
-    console.log(e.target.id);
-    console.log(e.target.title);
   };
 
   return (

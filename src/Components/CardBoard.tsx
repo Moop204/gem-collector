@@ -56,7 +56,6 @@ const Tier1Row: FunctionComponent<EngineStore> = observer(({ store }) => {
                 key={generateCardId(card) + "-1"}
                 onClick={async () => {
                   await store.cardSelection(1, i);
-                  // console.log("have this many blues " + store.player.cBlue);
                 }}
               >
                 <GemCard card={card} />
@@ -83,7 +82,6 @@ const Tier2Row: FunctionComponent<EngineStore> = observer(({ store }) => {
                 key={generateCardId(card) + "-2"}
                 onClick={async () => {
                   await store.cardSelection(2, i);
-                  // console.log("have this many blues " + store.player.cBlue);
                 }}
               >
                 <GemCard card={card} />
@@ -97,9 +95,6 @@ const Tier2Row: FunctionComponent<EngineStore> = observer(({ store }) => {
 });
 
 const Tier3Row: FunctionComponent<EngineStore> = observer(({ store }) => {
-  // if (store.board.isLoaded) {
-  // const tierRow = store.board.getTier3;
-  // console.log(store.board.getTier3);
   return (
     <>
       <GridItem rowSpan={1} colSpan={5} bg="blue">
@@ -114,7 +109,6 @@ const Tier3Row: FunctionComponent<EngineStore> = observer(({ store }) => {
                 key={generateCardId(card) + "-3"}
                 onClick={async () => {
                   await store.cardSelection(3, i);
-                  // console.log("have this many blues " + store.player.cBlue);
                 }}
               >
                 <GemCard card={card} />

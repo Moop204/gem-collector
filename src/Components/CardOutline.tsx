@@ -1,6 +1,4 @@
-import { ColorMode } from "@chakra-ui/color-mode";
 import { Box } from "@chakra-ui/layout";
-import { Colors } from "@chakra-ui/theme";
 import { FunctionComponent } from "react";
 import { Gem } from "./Card";
 
@@ -8,11 +6,8 @@ interface BoughtCardDetail {
   gem: Gem;
   tier: 1 | 2 | 3;
 }
-export const CardOutline: FunctionComponent<BoughtCardDetail> = ({
-  gem,
-  tier,
-}) => {
-  // Darker border colour
+
+export const borderCardColour = (tier: number): string => {
   let border: string;
   switch (tier) {
     case 3:
@@ -27,6 +22,14 @@ export const CardOutline: FunctionComponent<BoughtCardDetail> = ({
     default:
       border = "pink";
   }
+  return border;
+};
+export const CardOutline: FunctionComponent<BoughtCardDetail> = ({
+  gem,
+  tier,
+}) => {
+  // Darker border colour
+  const border = borderCardColour(tier);
   // Lighter colour for background
   let gemColour: string;
   switch (gem) {

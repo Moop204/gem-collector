@@ -58,16 +58,14 @@ export class BoardManager {
     const initialResponse = await fetch(request.toString(), { mode: "cors" });
     const obj = await initialResponse.json();
     let state: string = obj["state"];
-    // console.log(state);
-    // console.log("ha");
     this.deckState = state;
     // Request to fill board initially
     for (let i = 0; i < 4; i++) {
       let card = await this.drawCard(1, this.deckState);
       if (card) this.tier1.push(card);
-      card = await this.drawCard(1, this.deckState);
+      card = await this.drawCard(2, this.deckState);
       if (card) this.tier2.push(card);
-      card = await this.drawCard(1, this.deckState);
+      card = await this.drawCard(3, this.deckState);
       if (card) this.tier3.push(card);
       // Should never fail here
     }
@@ -84,11 +82,11 @@ export class BoardManager {
     if (obj.error) {
       return null;
     }
-    // console.log(obj);
+
     const card = new Card({
       reward: obj.card.reward,
       point: obj.card.point,
-      tier: 1,
+      tier: obj.card.tier,
       blackCost: obj.card.cost.black,
       whiteCost: obj.card.cost.white,
       redCost: obj.card.cost.red,

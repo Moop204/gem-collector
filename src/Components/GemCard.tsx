@@ -3,6 +3,7 @@ import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import "./test.css";
 import { Card, Gem } from "./Card";
 import { generateCardId } from "./CardBoard";
+import { borderCardColour } from "./CardOutline";
 
 interface IGemCard {
   card: Card;
@@ -83,7 +84,6 @@ const GemRewardComponent: FunctionComponent<IReward> = ({
   value,
 }) => {
   if (value) {
-    // console.log("HAD VALUE");
     switch (gem) {
       case Gem.RED:
         return <RedGem w={w} h={h} value={value} />;
@@ -109,12 +109,10 @@ const GemRewardComponent: FunctionComponent<IReward> = ({
     case "green":
       return <GreenGem w={w} h={h} />;
   }
-  // console.log("INVALID GEM PASSED");
   return <></>;
 };
 
 const CardReward: FunctionComponent<{ card: Card }> = ({ card }) => {
-  // console.log(card);
   return (
     <Flex
       justifyContent="right"
@@ -156,7 +154,6 @@ const calculateCost = (card: Card) => {
 
 const CostComponent: FunctionComponent<IGemCard> = ({ card }) => {
   const costs = calculateCost(card);
-  // console.log(costs);
   return (
     <Grid
       templateRows="repeat(6, 1fr)"
@@ -168,7 +165,7 @@ const CostComponent: FunctionComponent<IGemCard> = ({ card }) => {
         <CardReward card={card} />
       </GridItem>
       {Object.entries(costs).map(([key, cost]) => {
-        console.log(generateCardId(card) + key + "-" + cost);
+        // console.log(generateCardId(card) + key + "-" + cost);
         return (
           <div id={generateCardId(card) + key + "-" + cost}>
             <GridItem bg="green">
@@ -188,6 +185,8 @@ const CostComponent: FunctionComponent<IGemCard> = ({ card }) => {
 };
 
 const GemCard: FunctionComponent<IGemCard> = ({ card }) => {
+  const borderColour =
+    card.reward == Gem.BLACK ? "orange" : borderCardColour(card.tier);
   return (
     <Box
       w="100%"
@@ -198,7 +197,7 @@ const GemCard: FunctionComponent<IGemCard> = ({ card }) => {
       border="8px"
       borderStyle="outset"
       bg="burlywood"
-      borderColor="#3a84c3"
+      borderColor={borderColour}
     >
       <CostComponent card={card} />
     </Box>

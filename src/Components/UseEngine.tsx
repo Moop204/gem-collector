@@ -23,7 +23,6 @@ const UseEngine: FunctionComponent<EngineStore> = ({ store }) => {
       <Button
         onClick={() => {
           store.gemSelection([Gem.BLUE]);
-          console.log(store.gemDetail(Gem.BLUE));
         }}
       >
         click me!
