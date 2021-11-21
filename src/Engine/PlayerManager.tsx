@@ -11,11 +11,11 @@ export class PlayerManager {
   blue: number;
   wild: number;
 
-  cBlack: number;
-  cWhite: number;
-  cRed: number;
-  cGreen: number;
-  cBlue: number;
+  cBlack: Card[];
+  cWhite: Card[];
+  cRed: Card[];
+  cGreen: Card[];
+  cBlue: Card[];
 
   state: State;
 
@@ -27,11 +27,11 @@ export class PlayerManager {
     this.green = 10;
     this.blue = 10;
     this.wild = 5;
-    this.cBlack = 2;
-    this.cWhite = 2;
-    this.cRed = 2;
-    this.cGreen = 2;
-    this.cBlue = 2;
+    this.cBlack = [];
+    this.cWhite = [];
+    this.cRed = [];
+    this.cGreen = [];
+    this.cBlue = [];
     this.state = State.AWAIT;
   }
 
@@ -43,22 +43,23 @@ export class PlayerManager {
     this.state = State.AWAIT;
   }
 
-  addCard(gemType: Gem) {
+  addCard(c: Card) {
+    const gemType = c.reward;
     switch (gemType) {
       case Gem.BLACK:
-        this.cBlack++;
+        this.cBlack.push(c);
         break;
       case Gem.BLUE:
-        this.cBlue++;
+        this.cBlue.push(c);
         break;
       case Gem.WHITE:
-        this.cWhite++;
+        this.cWhite.push(c);
         break;
       case Gem.GREEN:
-        this.cGreen++;
+        this.cGreen.push(c);
         break;
       case Gem.RED:
-        this.cRed++;
+        this.cRed.push(c);
         break;
     }
   }
@@ -66,15 +67,15 @@ export class PlayerManager {
   getCardTotal(gem: Gem) {
     switch (gem) {
       case Gem.BLACK:
-        return this.cBlack;
+        return this.cBlack.length;
       case Gem.BLUE:
-        return this.cBlue;
+        return this.cBlue.length;
       case Gem.WHITE:
-        return this.cWhite;
+        return this.cWhite.length;
       case Gem.GREEN:
-        return this.cGreen;
+        return this.cGreen.length;
       case Gem.RED:
-        return this.cRed;
+        return this.cRed.length;
     }
     return 0;
   }
@@ -85,17 +86,23 @@ export class PlayerManager {
 
   isCardBuyable(c: Card) {
     const blackRemainder = Math.max(
-      c.blackCost - (this.cBlack + this.black),
+      c.blackCost - (this.getCardTotal(Gem.BLACK) + this.black),
       0
     );
     const whiteRemainder = Math.max(
-      c.whiteCost - (this.cWhite + this.white),
+      c.whiteCost - (this.getCardTotal(Gem.WHITE) + this.white),
       0
     );
-    const blueRemainder = Math.max(c.blueCost - (this.cBlue + this.blue), 0);
-    const redRemainder = Math.max(c.redCost - (this.cRed + this.red), 0);
+    const blueRemainder = Math.max(
+      c.blueCost - (this.getCardTotal(Gem.BLUE) + this.blue),
+      0
+    );
+    const redRemainder = Math.max(
+      c.redCost - (this.getCardTotal(Gem.RED) + this.red),
+      0
+    );
     const greenRemainder = Math.max(
-      c.greenCost - (this.cGreen + this.green),
+      c.greenCost - (this.getCardTotal(Gem.GREEN) + this.green),
       0
     );
     return (
@@ -118,9 +125,12 @@ export class PlayerManager {
       wild: 0,
     };
 
-    this.addCard(c.reward);
+    this.addCard(c);
 
-    const blackCoinCost = Math.max(c.blackCost - this.cBlack, 0);
+    const blackCoinCost = Math.max(
+      c.blackCost - this.getCardTotal(Gem.BLACK),
+      0
+    );
     this.black -= blackCoinCost;
     res.black = blackCoinCost;
     if (this.black < 0) {
@@ -130,7 +140,7 @@ export class PlayerManager {
       this.black = 0;
     }
 
-    const blueCoinCost = Math.max(c.blueCost - this.cBlue, 0);
+    const blueCoinCost = Math.max(c.blueCost - this.getCardTotal(Gem.BLUE), 0);
     this.blue -= blueCoinCost;
     res.blue = blueCoinCost;
     if (this.blue < 0) {
@@ -140,7 +150,7 @@ export class PlayerManager {
       this.blue = 0;
     }
 
-    const redCoinCost = Math.max(c.redCost - this.cRed, 0);
+    const redCoinCost = Math.max(c.redCost - this.getCardTotal(Gem.RED), 0);
     this.red -= redCoinCost;
     res.red = redCoinCost;
     if (this.red < 0) {
@@ -150,7 +160,10 @@ export class PlayerManager {
       this.red = 0;
     }
 
-    const greenCoinCost = Math.max(c.greenCost - this.cGreen, 0);
+    const greenCoinCost = Math.max(
+      c.greenCost - this.getCardTotal(Gem.GREEN),
+      0
+    );
     this.green -= greenCoinCost;
     res.green = greenCoinCost;
     if (this.green < 0) {
@@ -160,7 +173,10 @@ export class PlayerManager {
       this.green = 0;
     }
 
-    const whiteCoinCost = Math.max(c.whiteCost - this.cWhite, 0);
+    const whiteCoinCost = Math.max(
+      c.whiteCost - this.getCardTotal(Gem.WHITE),
+      0
+    );
     this.white -= whiteCoinCost;
     res.white = whiteCoinCost;
     if (this.white < 0) {

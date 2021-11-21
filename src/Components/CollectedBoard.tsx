@@ -30,6 +30,7 @@ interface EngineStore {
 
 export const CollectedBoard: FunctionComponent<EngineStore> = observer(
   ({ store }) => {
+    console.log(store.player.cRed);
     return (
       <Grid
         templateColumns="repeat(5, 1fr)"
@@ -39,83 +40,60 @@ export const CollectedBoard: FunctionComponent<EngineStore> = observer(
         h="100%"
       >
         <GridItem bg="red" id="first-thingo" alignSelf="left" marginLeft="4px">
-          {/* <Box
-          position="absolute"
-          top={translationOwnedCards + "vh"}
-          h="30%"
-          w="8%"
-        >
-          <CardOutline gem={Gem.BLUE} tier={2} />
-        </Box> */}
-          <OwnedCard
-            translate={translationOwnedCards}
-            tier={2}
-            gem={Gem.BLUE}
-          />
-          <OwnedCard
-            translate={translationOwnedCards + 4}
-            tier={2}
-            gem={Gem.BLUE}
-          />
-          <OwnedCard
-            translate={translationOwnedCards + 8}
-            tier={2}
-            gem={Gem.BLUE}
-          />
-          <OwnedCard
-            translate={translationOwnedCards + 12}
-            tier={2}
-            gem={Gem.BLUE}
-          />
+          {store.player.cRed.map((c, i) => {
+            return (
+              <OwnedCard
+                translate={translationOwnedCards + 4 * i}
+                tier={c.tier}
+                gem={c.reward}
+              />
+            );
+          })}
         </GridItem>
         <GridItem rowSpan={1} colSpan={1}>
-          <OwnedCard
-            translate={translationOwnedCards}
-            tier={1}
-            gem={Gem.GREEN}
-          />
-          <OwnedCard
-            translate={translationOwnedCards + 4}
-            tier={1}
-            gem={Gem.GREEN}
-          />
+          {store.player.cGreen.map((c, i) => {
+            return (
+              <OwnedCard
+                translate={translationOwnedCards + 4 * i}
+                tier={c.tier}
+                gem={c.reward}
+              />
+            );
+          })}
         </GridItem>
         <GridItem rowSpan={1} colSpan={1}>
-          <OwnedCard translate={translationOwnedCards} tier={1} gem={Gem.RED} />
-          <OwnedCard
-            translate={translationOwnedCards + 4}
-            tier={2}
-            gem={Gem.RED}
-          />
-          <OwnedCard
-            translate={translationOwnedCards + 8}
-            tier={3}
-            gem={Gem.RED}
-          />
+          {store.player.cBlue.map((c, i) => {
+            return (
+              <OwnedCard
+                translate={translationOwnedCards + 4 * i}
+                tier={c.tier}
+                gem={c.reward}
+              />
+            );
+          })}
         </GridItem>
         <GridItem rowSpan={1} colSpan={1}>
-          <Box position="absolute" top={translationOwnedCards + "vh"}>
-            <CardOutline gem={Gem.BLUE} tier={2} />
-          </Box>
+          {store.player.cWhite.map((c, i) => {
+            return (
+              <OwnedCard
+                translate={translationOwnedCards + 4 * i}
+                tier={c.tier}
+                gem={c.reward}
+              />
+            );
+          })}
         </GridItem>
         <GridItem rowSpan={1} colSpan={1}>
-          <Box position="absolute" top={translationOwnedCards + "vh"}>
-            <CardOutline gem={Gem.BLUE} tier={2} />
-          </Box>
-          <Box position="absolute" top={translationOwnedCards + 4 + "vh"}>
-            <CardOutline gem={Gem.BLUE} tier={2} />
-          </Box>
+          {store.player.cBlack.map((c, i) => {
+            return (
+              <OwnedCard
+                translate={translationOwnedCards + 4 * i}
+                tier={c.tier}
+                gem={c.reward}
+              />
+            );
+          })}
         </GridItem>
-
-        <Button
-          onClick={async () => {
-            await store.cardSelection(2, 0);
-            console.log("have this many blues " + store.player.cBlue);
-          }}
-        >
-          {" "}
-          DRAW A CARD!!!{" "}
-        </Button>
       </Grid>
     );
   }
