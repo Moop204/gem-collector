@@ -29,19 +29,10 @@ const CoinBoard: FunctionComponent<CoinsState> = ({ store }) => {
     if (dupe != -1) {
       selection.splice(dupe, 1);
       setSelection([...selection]);
-      console.log("Duped");
     } else {
       if (selection.length < 3) {
-        console.log("YES");
         setSelection([...selection.filter((g) => g != Gem.WILD), colour]);
-      } else {
-        console.log("Too big");
       }
-    }
-
-    console.log("|");
-    for (const a in selection) {
-      console.log(a);
     }
   };
 

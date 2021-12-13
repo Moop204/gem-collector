@@ -3,8 +3,8 @@ import { Engine } from "../Engine/Engine";
 
 describe("Coin collection", () => {
   let engine: Engine;
-  beforeEach(() => {
-    engine = new Engine();
+  beforeEach(async () => {
+    engine = await new Engine();
   });
 
   it("Collects one coin from wild type", () => {

@@ -75,6 +75,7 @@ export class Engine {
   async cardSelection(tier: Tier, index: number) {
     const c: Card = this.board.board[tier - 1][index];
     if (this.player.isCardBuyable(c)) {
+      console.log("REMOVING CARD");
       const card: Card[] = await this.board.removeCard(tier, index);
       const payment = this.player.buyCard(card[0]);
       this.economy.returnToTreasury(payment);
@@ -82,6 +83,7 @@ export class Engine {
 
     this.player.endTurn();
     // Wait set amount of time then set turn again for testing
+    return c;
   }
 
   gemDetail(g: Gem) {

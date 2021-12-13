@@ -55,11 +55,11 @@ export class BoardManager {
 
   async initialiseBoard() {
     const request = new URL("start", base);
-    console.log(request.toString());
+    // console.log(request.toString());
     const initialResponse = await fetch(request.toString(), { mode: "cors" });
-    console.log(initialResponse);
+    // console.log(initialResponse);
     const obj = await initialResponse.json();
-    console.log(obj);
+    // console.log(obj);
     let state: string = obj["state"];
     this.deckState = state;
     // Request to fill board initially
@@ -131,6 +131,7 @@ export class BoardManager {
   async removeCard(tier: Tier, index: number) {
     const nextCard = await this.drawCard(tier, this.deckState);
     if (nextCard) {
+      console.log("NEXT CARD");
       switch (tier) {
         case 1:
           return this.tier1.splice(index, 1, nextCard);
@@ -142,6 +143,7 @@ export class BoardManager {
           console.log("Error: Not a valid tier");
       }
     } else {
+      console.log("NO CARD");
       switch (tier) {
         case 1:
           return this.tier1.splice(index, 1);

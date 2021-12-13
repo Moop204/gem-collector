@@ -30,7 +30,6 @@ interface EngineStore {
 
 export const CollectedBoard: FunctionComponent<EngineStore> = observer(
   ({ store }) => {
-    console.log(store.player.cRed);
     return (
       <Grid
         templateColumns="repeat(5, 1fr)"

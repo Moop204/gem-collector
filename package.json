@@ -1,6 +1,7 @@
 {
   "name": "splendor-clone",
   "version": "0.0.0",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -11,6 +12,7 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "framer-motion": "^4",
+    "isomorphic-fetch": "^3.0.0",
     "jest": "^27.4.4",
     "mobx": "^6.3.7",
     "mobx-react": "^7.2.1",
