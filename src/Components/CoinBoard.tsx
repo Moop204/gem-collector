@@ -19,6 +19,13 @@ const CoinBoard: FunctionComponent<CoinsState> = ({ store }) => {
 
   const [selection, setSelection] = useState<Gem[]>([]);
 
+  const handleSubmission = () => {
+    if (selection.length != 1 && selection.length != 3) {
+      console.error("Error: Purchasing invalid number of gems.");
+    }
+    store.gemSelection(selection);
+  };
+
   const handleSelection = (colour: Gem) => {
     const dupe = selection.indexOf(colour);
     if (colour == Gem.WILD) {
@@ -38,7 +45,11 @@ const CoinBoard: FunctionComponent<CoinsState> = ({ store }) => {
 
   return (
     <Box bg="burlywood">
-      <Grid templateColumns="repeat(6, 1fr)" w="100%" gap={4}>
+      <Grid templateColumns="repeat(7, 1fr)" w="100%" gap={4}>
+        <GridItem>
+          <Button onClick={handleSubmission}>Confirm Gem</Button>
+          <Button>Reserve Card</Button>
+        </GridItem>
         <GridItem bg={selection.includes(Gem.BLUE) ? "yellow" : "green"}>
           <CoinPile
             transform={0}
