@@ -11,6 +11,7 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "framer-motion": "^4",
+    "jest": "^27.4.4",
     "mobx": "^6.3.7",
     "mobx-react": "^7.2.1",
     "mobx-react-lite": "^3.2.2",
@@ -18,10 +19,23 @@
     "react-dom": "^17.0.0"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.3",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@vitejs/plugin-react": "^1.0.0",
+    "ts-jest": "^27.1.1",
     "typescript": "^4.3.2",
     "vite": "^2.6.0"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   }
 }

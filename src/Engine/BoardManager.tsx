@@ -1,8 +1,8 @@
 import { action, makeAutoObservable, observable } from "mobx";
 import { Card, Gem, Tier } from "../Components/Card";
 
-// const base = "https://deck-of-gems.herokuapp.com/";
-const base = "http://localhost:3000/";
+const base = "https://deck-of-gems.herokuapp.com/";
+// const base = "http://localhost:3000/";
 
 export class BoardManager {
   tier1: Card[];
@@ -55,8 +55,11 @@ export class BoardManager {
 
   async initialiseBoard() {
     const request = new URL("start", base);
+    console.log(request.toString());
     const initialResponse = await fetch(request.toString(), { mode: "cors" });
+    console.log(initialResponse);
     const obj = await initialResponse.json();
+    console.log(obj);
     let state: string = obj["state"];
     this.deckState = state;
     // Request to fill board initially

@@ -79,6 +79,11 @@ export class GemManager {
       case Gem.RED:
         this.red += adjust;
         break;
+      case Gem.WILD:
+        this.wild += adjust;
+        break;
+      default:
+        this.errors.push("Error: Invalid Gem given. At GemManager: adjustGem");
     }
   }
 

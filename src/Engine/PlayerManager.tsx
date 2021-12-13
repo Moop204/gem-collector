@@ -192,16 +192,22 @@ export class PlayerManager {
     switch (gem) {
       case Gem.BLACK:
         this.black += adjustment;
+        break;
       case Gem.BLUE:
         this.blue += adjustment;
+        break;
       case Gem.WHITE:
         this.white += adjustment;
+        break;
       case Gem.GREEN:
         this.green += adjustment;
+        break;
       case Gem.RED:
         this.red += adjustment;
+        break;
       case Gem.WILD:
         this.wild += adjustment;
+        break;
     }
   }
 
