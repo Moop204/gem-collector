@@ -84,35 +84,34 @@ export class PlayerManager {
     return Math.min(this.getCardTotal(gem) - cost, 0);
   }
 
+  getCoinCount(gem: Gem) {
+    switch (gem) {
+      case Gem.BLACK:
+        return this.black;
+      case Gem.BLUE:
+        return this.blue;
+      case Gem.WHITE:
+        return this.white;
+      case Gem.GREEN:
+        return this.green;
+      case Gem.RED:
+        return this.red;
+    }
+    return 0;
+  }
+
   isCardBuyable(c: Card) {
-    const blackRemainder = Math.max(
-      c.blackCost - (this.getCardTotal(Gem.BLACK) + this.black),
-      0
-    );
-    const whiteRemainder = Math.max(
-      c.whiteCost - (this.getCardTotal(Gem.WHITE) + this.white),
-      0
-    );
-    const blueRemainder = Math.max(
-      c.blueCost - (this.getCardTotal(Gem.BLUE) + this.blue),
-      0
-    );
-    const redRemainder = Math.max(
-      c.redCost - (this.getCardTotal(Gem.RED) + this.red),
-      0
-    );
-    const greenRemainder = Math.max(
-      c.greenCost - (this.getCardTotal(Gem.GREEN) + this.green),
-      0
-    );
-    return (
-      blackRemainder +
-        whiteRemainder +
-        blueRemainder +
-        redRemainder +
-        greenRemainder <=
-      this.wild
-    );
+    let extraCost = 0;
+    const gems = [Gem.BLACK, Gem.BLUE, Gem.GREEN, Gem.RED, Gem.WHITE];
+
+    gems.forEach((gem) => {
+      extraCost += Math.max(
+        c.getCost(gem) - (this.getCardTotal(gem) + this.getCoinCount(gem)),
+        0
+      );
+    });
+
+    return extraCost <= this.wild;
   }
 
   buyCard(c: Card) {

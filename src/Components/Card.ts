@@ -88,6 +88,22 @@ export class Card {
     ];
   }
 
+  getCost(g: Gem) {
+    switch (g) {
+      case Gem.BLACK:
+        return this.blackCost;
+      case Gem.BLUE:
+        return this.blueCost;
+      case Gem.GREEN:
+        return this.greenCost;
+      case Gem.RED:
+        return this.redCost;
+      case Gem.WHITE:
+        return this.whiteCost;
+    }
+    return 0;
+  }
+
   getTier() {
     return this.tier;
   }
