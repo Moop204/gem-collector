@@ -151,6 +151,10 @@ export class BoardManager {
     }
   }
 
+  removeBonusCard(index: number) {
+    return this.bonus.splice(index, 1)[0];
+  }
+
   async removeCard(tier: Tier, index: number) {
     const nextCard = await this.drawCard(tier, this.deckState);
     if (nextCard) {

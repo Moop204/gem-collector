@@ -33,9 +33,14 @@ const BonusRow: FunctionComponent<EngineStore> = observer(({ store }) => {
     <>
       <GridItem id="bonus-row" rowSpan={1} colSpan={5}>
         <Grid templateColumns="repeat(5, 1fr)" columnGap={24}>
-          {store.board.bonus.map((bonus: Bonus) => {
+          {store.board.bonus.map((bonus: Bonus, i: number) => {
             return (
-              <GridItem bg="blue">
+              <GridItem
+                bg="blue"
+                onClick={async () => {
+                  await store.bonusSelection(i);
+                }}
+              >
                 <BonusCard card={bonus} />
               </GridItem>
             );

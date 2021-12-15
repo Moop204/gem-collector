@@ -73,6 +73,20 @@ export class Engine {
     this.player.claimGems(claims);
   }
 
+  async bonusSelection(index: number) {
+    const c: Bonus = this.board.bonus[index];
+    if (this.player.isBonusBuyable(c)) {
+      console.log("REMOVING CARD");
+      const card: Bonus = await this.board.removeBonusCard(index);
+      const payment = this.player.buyBonus(card);
+      this.economy.returnToTreasury(payment);
+    }
+
+    this.player.endTurn();
+    // Wait set amount of time then set turn again for testing
+    return c;
+  }
+
   async cardSelection(tier: Tier, index: number) {
     const c: Card = this.board.board[tier - 1][index];
     if (this.player.isCardBuyable(c)) {
