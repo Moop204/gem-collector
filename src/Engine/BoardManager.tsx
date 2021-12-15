@@ -1,4 +1,5 @@
 import { action, makeAutoObservable, observable } from "mobx";
+import { Bonus, BonusInitialiser } from "../Components/Bonus";
 import { Card, Gem, Tier } from "../Components/Card";
 
 const base = "https://deck-of-gems.herokuapp.com/";
@@ -8,7 +9,7 @@ export class BoardManager {
   tier1: Card[];
   tier2: Card[];
   tier3: Card[];
-  bonus: Card[];
+  bonus: Bonus[];
   loaded: boolean;
   deckState: string;
 
@@ -24,6 +25,7 @@ export class BoardManager {
       drawCard: action,
       removeCard: action,
       getCard: action,
+      // isLoaded: action,
     });
 
     this.tier1 = [];
@@ -72,7 +74,28 @@ export class BoardManager {
       if (card) this.tier3.push(card);
       // Should never fail here
     }
+
+    this.bonus = await this.drawBonus();
+
     this.loaded = true;
+  }
+
+  async drawBonus() {
+    const request = new URL("bonus", base);
+    const response = await fetch(request.toString(), { mode: "cors" });
+    const obj: Array<JSON> = await response.json();
+    if (obj.length == 0) return [];
+    return obj.map((bonus: any) => {
+      const initialiser: BonusInitialiser = {
+        reward: bonus.reward,
+        blackCost: bonus.requirement.black,
+        whiteCost: bonus.requirement.white,
+        redCost: bonus.requirement.red,
+        blueCost: bonus.requirement.blue,
+        greenCost: bonus.requirement.green,
+      };
+      return new Bonus(initialiser);
+    });
   }
 
   async drawCard(tier: number, state: string) {

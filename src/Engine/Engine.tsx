@@ -11,6 +11,7 @@ import {
   makeAutoObservable,
   observable,
 } from "mobx";
+import { Bonus } from "../Components/Bonus";
 
 export class Engine {
   board: BoardManager;

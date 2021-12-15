@@ -14,7 +14,7 @@ export const CoinPile: FunctionComponent<Pile> = ({
 }) => {
   const positions: number[] = [];
   for (let i = 0; i < height; i++) {
-    positions.push((12 - i) * 10 + transform);
+    positions.push((16 - i) * 10 + transform);
   }
   // positions.reverse();
   const [selected, setSelected] = useState(-1);

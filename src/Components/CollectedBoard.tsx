@@ -6,7 +6,7 @@ import { Engine } from "../Engine/Engine";
 import { Gem } from "./Card";
 import { CardOutline } from "./CardOutline";
 
-const translationOwnedCards = 28;
+const translationOwnedCards = 64;
 
 const OwnedCard = ({
   translate,

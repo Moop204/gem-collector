@@ -11,6 +11,10 @@ import { CollectedBoard } from "./Components/CollectedBoard";
 function App() {
   const [engine, setEngine] = useState(new Engine());
 
+  // if (!engine.board.loaded) {
+  //   return <div>Loading...</div>;
+  // }
+
   return (
     <Grid
       h="100vh"

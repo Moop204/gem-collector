@@ -5,6 +5,8 @@ import { Tier1, Tier2, Tier3, TierBack } from "./TierBack";
 import { observer } from "mobx-react-lite";
 import { Engine } from "../Engine/Engine";
 import { Card } from "./Card";
+import { Bonus, BonusInitialiser } from "./Bonus";
+import { BonusCard } from "./BonusCard";
 
 interface EngineStore {
   store: Engine;
@@ -26,21 +28,23 @@ export const generateCardId = (c: Card): string => {
   );
 };
 
-const BonusRow: FunctionComponent<{}> = () => {
+const BonusRow: FunctionComponent<EngineStore> = observer(({ store }) => {
   return (
     <>
       <GridItem id="bonus-row" rowSpan={1} colSpan={5}>
         <Grid templateColumns="repeat(5, 1fr)" columnGap={24}>
-          <GridItem bg="blue" />
-          <GridItem bg="orange">{/* <GemCard /> */}</GridItem>
-          <GridItem bg="green">{/* <GemCard /> */}</GridItem>
-          <GridItem bg="blue">{/* <GemCard /> */}</GridItem>
-          <GridItem bg="red">{/* <GemCard /> */}</GridItem>
+          {store.board.bonus.map((bonus: Bonus) => {
+            return (
+              <GridItem bg="blue">
+                <BonusCard card={bonus} />
+              </GridItem>
+            );
+          })}
         </Grid>
       </GridItem>
     </>
   );
-};
+});
 
 const Tier1Row: FunctionComponent<EngineStore> = observer(({ store }) => {
   return (
@@ -131,7 +135,7 @@ const CardBoard: FunctionComponent<EngineStore> = ({ store }) => {
       templateColumns="repeat(5, 1fr)"
       gap={24}
     >
-      <BonusRow />
+      <BonusRow store={store} />
       <Tier3Row store={store} />
       <Tier2Row store={store} />
       <Tier1Row store={store} />
