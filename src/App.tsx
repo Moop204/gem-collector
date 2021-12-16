@@ -8,8 +8,9 @@ import { HandBoard } from "./Components/HandBoard";
 import { Engine } from "./Engine/Engine";
 import { Gem } from "./Components/Card";
 import { CollectedBoard } from "./Components/CollectedBoard";
-function App() {
-  const [engine, setEngine] = useState(new Engine());
+const App = async () => {
+  // const [engine, setEngine] = useState(new Engine());
+  const [engine, setEngine] = useState(await Engine.build());
 
   // if (!engine.board.loaded) {
   //   return <div>Loading...</div>;
@@ -49,6 +50,6 @@ function App() {
       </GridItem>
     </Grid>
   );
-}
+};
 
 export default App;

@@ -196,70 +196,84 @@ export class PlayerManager {
 
     this.addBonus(c);
 
-    const blackCoinCost = Math.max(
-      c.requirement.black - this.getCardTotal(Gem.BLACK),
-      0
-    );
-    this.black -= blackCoinCost;
-    res.black = blackCoinCost;
-    if (this.black < 0) {
-      this.wild += this.black;
-      res.black += this.black;
-      res.wild -= this.black;
-      this.black = 0;
-    }
+    const gems = [Gem.BLACK, Gem.BLUE, Gem.GREEN, Gem.RED, Gem.WHITE];
 
-    const blueCoinCost = Math.max(
-      c.requirement.blue - this.getCardTotal(Gem.BLUE),
-      0
-    );
-    this.blue -= blueCoinCost;
-    res.blue = blueCoinCost;
-    if (this.blue < 0) {
-      this.wild += this.blue;
-      res.blue += this.blue;
-      res.wild -= this.blue;
-      this.blue = 0;
-    }
+    gems.map((gem) => {
+      const coinCost = Math.max(c.getCost(gem) - this.getCardTotal(gem), 0);
+      this.adjustCoin(gem, coinCost);
+      res[gem] = coinCost;
+      if ((this, this.getCoinCount(gem) < 0)) {
+        this.wild += this.getCoinCount(gem);
+        res[gem] += this.getCoinCount(gem);
+        res.wild -= this.getCoinCount(gem);
+        this[gem] = 0;
+      }
+    });
 
-    const redCoinCost = Math.max(
-      c.requirement.red - this.getCardTotal(Gem.RED),
-      0
-    );
-    this.red -= redCoinCost;
-    res.red = redCoinCost;
-    if (this.red < 0) {
-      this.wild += this.red;
-      res.red += this.red;
-      res.wild -= this.red;
-      this.red = 0;
-    }
+    // const blackCoinCost = Math.max(
+    //   c.requirement.black - this.getCardTotal(Gem.BLACK),
+    //   0
+    // );
+    // this.black -= blackCoinCost;
+    // res.black = blackCoinCost;
+    // if (this.black < 0) {
+    //   this.wild += this.black;
+    //   res.black += this.black;
+    //   res.wild -= this.black;
+    //   this.black = 0;
+    // }
 
-    const greenCoinCost = Math.max(
-      c.requirement.green - this.getCardTotal(Gem.GREEN),
-      0
-    );
-    this.green -= greenCoinCost;
-    res.green = greenCoinCost;
-    if (this.green < 0) {
-      this.wild += this.green;
-      res.green += this.green;
-      res.wild -= this.green;
-      this.green = 0;
-    }
+    // const blueCoinCost = Math.max(
+    //   c.requirement.blue - this.getCardTotal(Gem.BLUE),
+    //   0
+    // );
+    // this.blue -= blueCoinCost;
+    // res.blue = blueCoinCost;
+    // if (this.blue < 0) {
+    //   this.wild += this.blue;
+    //   res.blue += this.blue;
+    //   res.wild -= this.blue;
+    //   this.blue = 0;
+    // }
 
-    const whiteCoinCost = Math.max(
-      c.requirement.white - this.getCardTotal(Gem.WHITE),
-      0
-    );
-    this.white -= whiteCoinCost;
-    res.white = whiteCoinCost;
-    if (this.white < 0) {
-      this.wild += this.white;
-      res.white += this.white;
-      res.wild -= this.white;
-      this.white = 0;
-    }
+    // const redCoinCost = Math.max(
+    //   c.requirement.red - this.getCardTotal(Gem.RED),
+    //   0
+    // );
+    // this.red -= redCoinCost;
+    // res.red = redCoinCost;
+    // if (this.red < 0) {
+    //   this.wild += this.red;
+    //   res.red += this.red;
+    //   res.wild -= this.red;
+    //   this.red = 0;
+    // }
+
+    // const greenCoinCost = Math.max(
+    //   c.requirement.green - this.getCardTotal(Gem.GREEN),
+    //   0
+    // );
+    // this.green -= greenCoinCost;
+    // res.green = greenCoinCost;
+    // if (this.green < 0) {
+    //   this.wild += this.green;
+    //   res.green += this.green;
+    //   res.wild -= this.green;
+    //   this.green = 0;
+    // }
+
+    // const whiteCoinCost = Math.max(
+    //   c.requirement.white - this.getCardTotal(Gem.WHITE),
+    //   0
+    // );
+    // this.white -= whiteCoinCost;
+    // res.white = whiteCoinCost;
+    // if (this.white < 0) {
+    //   this.wild += this.white;
+    //   res.white += this.white;
+    //   res.wild -= this.white;
+    //   this.white = 0;
+    // }
     return res;
   }
 

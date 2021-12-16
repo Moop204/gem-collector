@@ -28,11 +28,23 @@ export class Engine {
       gemDetail: action,
       isWon: computed,
       gemSelection: action,
+      // build: action,
     });
     this.board = new BoardManager();
     this.economy = new GemManager();
     this.player = new PlayerManager();
     this.gameState = State.AWAIT;
+  }
+
+  async initialise() {
+    await this.board.initialiseBoard();
+  }
+
+  static async build() {
+    const engine = new Engine();
+    await engine.initialise();
+
+    return engine;
   }
 
   get isWon() {

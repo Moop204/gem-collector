@@ -34,7 +34,11 @@ export class BoardManager {
     this.bonus = [];
     this.loaded = false;
     this.deckState = "";
-    this.initialiseBoard();
+    // this.initialiseBoard();
+    // TODO: Remove busy wait and replace with saner solution
+    // while (!this.isLoaded) {
+    //   continue;
+    // }
   }
 
   get isLoaded() {
@@ -57,14 +61,16 @@ export class BoardManager {
 
   async initialiseBoard() {
     const request = new URL("start", base);
+    console.log("START!!!");
     // console.log(request.toString());
     const initialResponse = await fetch(request.toString(), { mode: "cors" });
-    // console.log(initialResponse);
+    console.log("initialResponse");
     const obj = await initialResponse.json();
     // console.log(obj);
     let state: string = obj["state"];
     this.deckState = state;
     // Request to fill board initially
+    console.log("LOOP START");
     for (let i = 0; i < 4; i++) {
       let card = await this.drawCard(1, this.deckState);
       if (card) this.tier1.push(card);
@@ -76,6 +82,7 @@ export class BoardManager {
     }
 
     this.bonus = await this.drawBonus();
+    console.log("DONE!!!");
 
     this.loaded = true;
   }
@@ -86,6 +93,7 @@ export class BoardManager {
     const obj: Array<JSON> = await response.json();
     if (obj.length == 0) return [];
     return obj.map((bonus: any) => {
+      console.log(bonus);
       const initialiser: BonusInitialiser = {
         reward: bonus.reward,
         blackCost: bonus.requirement.black,

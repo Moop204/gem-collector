@@ -11,12 +11,12 @@ jest.setTimeout(100000);
 
 describe("Card collection", () => {
   let engine: Engine;
-  // beforeEach(() => {});
+  beforeEach(async () => {
+    engine = await Engine.build();
+  });
 
   it("Purchase a tier 1 card with enough gems", async () => {
     // Pre action
-    engine = await new Engine();
-    await engine.board.initialiseBoard();
     engine.gemSelection([Gem.BLACK]);
     engine.gemSelection([Gem.BLUE]);
     engine.gemSelection([Gem.GREEN]);
@@ -31,6 +31,7 @@ describe("Card collection", () => {
 
     // Post action
     expect(engine.board.getTier1.length).toBe(originalCards.length);
+    console.log(removedCard.toJSON());
     expect(engine.board.getTier1[0] == removedCard).toBeFalsy();
     expect(engine.player.getCardTotal(card.reward)).toBe(1);
     expect(engine.economy.errors.length).toBe(0);
@@ -38,8 +39,6 @@ describe("Card collection", () => {
 
   it("Fail to purchase a tier 1 card with enough gems", async () => {
     // Pre action
-    engine = await new Engine();
-    await engine.board.initialiseBoard();
     const originalCards = engine.board.getTier1;
     const removedCard = engine.board.getTier1[0];
 
