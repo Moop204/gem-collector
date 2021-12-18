@@ -86,12 +86,15 @@ export class Engine {
   }
 
   async bonusSelection(index: number) {
-    const c: Bonus = this.board.bonus[index];
+    const c: Bonus | null = this.board.bonus[index];
+    if (c == null) return null;
     if (this.player.isBonusBuyable(c)) {
       console.log("REMOVING CARD");
-      const card: Bonus = await this.board.removeBonusCard(index);
-      const payment = this.player.buyBonus(card);
-      this.economy.returnToTreasury(payment);
+      const card: Bonus | null = await this.board.removeBonusCard(index);
+      if (card) {
+        const payment = this.player.buyBonus(card);
+        this.economy.returnToTreasury(payment);
+      }
     }
 
     this.player.endTurn();

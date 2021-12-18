@@ -165,9 +165,9 @@ const CostComponent: FunctionComponent<IGemCard> = ({ card }) => {
         <CardReward card={card} />
       </GridItem>
       {Object.entries(costs).map(([key, cost]) => {
-        // console.log(generateCardId(card) + key + "-" + cost);
+        const uniqueKey = generateCardId(card) + key + "-" + cost;
         return (
-          <div id={generateCardId(card) + key + "-" + cost}>
+          <div id={uniqueKey} key={uniqueKey}>
             <GridItem bg="green">
               <GemRewardComponent
                 gem={key as Gem}

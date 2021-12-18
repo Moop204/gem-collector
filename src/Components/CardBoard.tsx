@@ -4,7 +4,7 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import { Tier1, Tier2, Tier3, TierBack } from "./TierBack";
 import { observer } from "mobx-react-lite";
 import { Engine } from "../Engine/Engine";
-import { Card } from "./Card";
+import { Card, Gem } from "./Card";
 import { Bonus, BonusInitialiser } from "./Bonus";
 import { BonusCard } from "./BonusCard";
 
@@ -33,13 +33,20 @@ const BonusRow: FunctionComponent<EngineStore> = observer(({ store }) => {
     <>
       <GridItem id="bonus-row" rowSpan={1} colSpan={5}>
         <Grid templateColumns="repeat(5, 1fr)" columnGap={24}>
-          {store.board.bonus.map((bonus: Bonus, i: number) => {
+          <GridItem />
+          {store.board.bonus.map((bonus: Bonus | null, i: number) => {
+            if (bonus == null) {
+              return <></>;
+            }
             return (
               <GridItem
                 bg="blue"
                 onClick={async () => {
                   await store.bonusSelection(i);
                 }}
+                key={Object.values(bonus.requirement)
+                  .map((v) => v)
+                  .join("|")}
               >
                 <BonusCard card={bonus} />
               </GridItem>

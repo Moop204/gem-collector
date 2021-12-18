@@ -153,8 +153,6 @@ const calculateCost = (card: Bonus) => {
 
 const CostComponent: FunctionComponent<IBonusCard> = ({ card }) => {
   const costs = calculateCost(card);
-  console.log("1litreoftears");
-  console.log(costs);
   return (
     <Grid
       templateRows="repeat(6, 1fr)"
@@ -167,8 +165,9 @@ const CostComponent: FunctionComponent<IBonusCard> = ({ card }) => {
       </GridItem>
       {Object.entries(costs).map(([key, cost]) => {
         // console.log(generateCardId(card) + key + "-" + cost);
+        const uniqueKey = generateBonusId(card) + key + "-" + cost;
         return (
-          <div id={generateBonusId(card) + key + "-" + cost}>
+          <div id={uniqueKey} key={uniqueKey}>
             <GridItem bg="green">
               <RewardComponent
                 gem={key as Gem}
