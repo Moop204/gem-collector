@@ -18,7 +18,6 @@ const App = () => {
       setEngine(e);
     };
     makeEngine();
-    console.log("A thing");
   }, []);
 
   // if (!engine.board.loaded) {
