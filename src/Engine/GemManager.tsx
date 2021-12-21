@@ -9,7 +9,9 @@ export interface Cost {
   blue: number;
   wild: number;
 }
-
+/**
+ * Handles shared supply of gems
+ */
 export class GemManager {
   black: number;
   white: number;
@@ -31,6 +33,11 @@ export class GemManager {
     this.errors = [];
   }
 
+  /**
+   * Count for a specific gem
+   * @param gem Gem type searched
+   * @returns Count of gem
+   */
   selectGem(gem: Gem) {
     switch (gem) {
       case Gem.BLACK:
@@ -48,7 +55,12 @@ export class GemManager {
     }
   }
 
-  validClaim(claims: Gem[]) {
+  /**
+   * Determines if it is possible to claim a combination of gems
+   * @param claims A list of gems chosen.
+   * @returns Validity of selection.
+   */
+  validClaim(claims: Gem[]): boolean {
     if (claims.length === 3) {
       claims.forEach((claim) => {
         if (this.selectGem(claim) < 1) return false;
@@ -62,7 +74,12 @@ export class GemManager {
     return true;
   }
 
-  adjustGem(gem: Gem, adjust: number) {
+  /**
+   * Change supply of gem coins.
+   * @param gem Type of gem coin
+   * @param adjust How coins are changed
+   */
+  private adjustGem(gem: Gem, adjust: number) {
     switch (gem) {
       case Gem.BLACK:
         this.black += adjust;
@@ -87,6 +104,10 @@ export class GemManager {
     }
   }
 
+  /**
+   * Return coins to supply based on cost
+   * @param cost Cost of a card
+   */
   returnToTreasury(cost: Cost) {
     this.black += cost.black;
     this.white += cost.white;
@@ -96,6 +117,10 @@ export class GemManager {
     this.wild += cost.wild;
   }
 
+  /**
+   * Removes supply of coins based on claim.
+   * @param claims Gems selected by player
+   */
   claim(claims: Gem[]) {
     if (claims.length === 1) {
       const adjustment = claims[0] === "wild" ? -1 : -2;
